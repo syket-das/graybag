@@ -166,9 +166,9 @@ export const Navbar = () => {
       <div className="hidden lg:flex">
         <ToggleTheme />
 
-        <Button asChild size="sm" variant="ghost" aria-label="Contact Us">
+        <Button asChild size="sm" variant="secondary" aria-label="Contact Us">
           <Link aria-label="Contact Us" href="#contact">
-            Contact Us
+            Request a Quote
           </Link>
         </Button>
       </div>

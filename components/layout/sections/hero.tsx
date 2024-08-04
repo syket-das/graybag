@@ -1,15 +1,23 @@
 'use client';
+import Particles from '@/components/magicui/particles';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export const HeroSection = () => {
   const { theme } = useTheme();
+  const [color, setColor] = useState('#ffffff');
+
+  useEffect(() => {
+    setColor(theme === 'dark' ? '#ffffff' : '#000000');
+  }, [theme]);
+
   return (
-    <section className="container w-full">
+    <section className="container  overflow-x-hidden ">
       <div className="grid place-items-center lg:max-w-screen-xl gap-8 mx-auto py-20 md:py-32">
         <div className="text-center space-y-8">
           <Badge variant="outline" className="text-sm py-2">
@@ -64,6 +72,13 @@ export const HeroSection = () => {
           <div className="absolute bottom-0 left-0 w-full h-20 md:h-28 bg-gradient-to-b from-background/0 via-background/50 to-background rounded-lg"></div>
         </div>
       </div>
+      <Particles
+        className="absolute inset-0"
+        quantity={500}
+        ease={80}
+        color={color}
+        refresh
+      />
     </section>
   );
 };
