@@ -31,6 +31,7 @@ interface RouteProps {
 interface FeatureProps {
   title: string;
   description: string;
+  href: string;
 }
 
 const routeList: RouteProps[] = [
@@ -49,14 +50,17 @@ const featureList: FeatureProps[] = [
   {
     title: 'PvAi ',
     description: 'Transforming Ideas into Digital Realities.',
+    href: '/pvai',
   },
   {
     title: 'Technocean',
     description: 'Organize and manage events with ease and efficiency.',
+    href: '/technocean',
   },
   {
     title: 'CreativeWing',
     description: 'Accelerate Innovation. Elevate Your Research.',
+    href: '/creativewing',
   },
 ];
 
@@ -133,18 +137,20 @@ export const Navbar = () => {
                   height={600}
                 />
                 <ul className="flex flex-col gap-2">
-                  {featureList.map(({ title, description }) => (
-                    <li
-                      key={title}
-                      className="rounded-md p-3 text-sm hover:bg-muted"
-                    >
-                      <p className="mb-1 font-semibold leading-none text-foreground">
-                        {title}
-                      </p>
-                      <p className="line-clamp-2 text-muted-foreground">
-                        {description}
-                      </p>
-                    </li>
+                  {featureList.map(({ title, description, href }) => (
+                    <Link key={title} href={href}>
+                      <li
+                        key={title}
+                        className="rounded-md p-3 text-sm hover:bg-muted"
+                      >
+                        <p className="mb-1 font-semibold leading-none text-foreground">
+                          {title}
+                        </p>
+                        <p className="line-clamp-2 text-muted-foreground">
+                          {description}
+                        </p>
+                      </li>
+                    </Link>
                   ))}
                 </ul>
               </div>
@@ -167,7 +173,7 @@ export const Navbar = () => {
         <ToggleTheme />
 
         <Button asChild size="sm" variant="secondary" aria-label="Contact Us">
-          <Link aria-label="Contact Us" href="#contact">
+          <Link aria-label="Contact Us" href="/#contact">
             Request a Quote
           </Link>
         </Button>
