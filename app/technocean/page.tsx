@@ -18,7 +18,7 @@ const page = () => {
 
 export default page;
 
-export const products = [
+const products = [
   {
     title: 'Moonbeam',
     link: 'https://gomoonbeam.com',
