@@ -5,15 +5,41 @@ import React from 'react';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from 'sonner';
+import addData from '@/lib/addData';
 
 const ContactUs = () => {
-  const handleSubmit = () => {
-    toast.success(
-      'Thank you for contacting us. We will get back to you soon.',
-      {
+  const [data, setData] = React.useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    message: '',
+    subject: 'Queries',
+  });
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const randomId = Math.floor(Math.random() * 1000000);
+
+    try {
+      const { result, error } = await addData(
+        'users',
+        'user-id-' + randomId,
+        data
+      );
+
+      toast.success(
+        'Thank you for contacting us. We will get back to you soon.',
+        {
+          position: 'top-center',
+        }
+      );
+    } catch (error) {
+      toast.error('Failed to submit the form. Please try again.', {
         position: 'top-center',
-      }
-    );
+      });
+    }
   };
 
   return (
@@ -133,13 +159,17 @@ const ContactUs = () => {
         </div>
 
         <div className="p-4 lg:col-span-2">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="relative flex items-center">
                 <Input
                   type="text"
                   placeholder="First Name"
                   className="px-2 py-3  w-full text-sm "
+                  value={data.firstName}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, firstName: e.target.value }))
+                  }
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -158,6 +188,10 @@ const ContactUs = () => {
                   type="text"
                   placeholder="Last Name"
                   className="px-2 py-3  w-full text-sm "
+                  value={data.lastName}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, lastName: e.target.value }))
+                  }
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -175,7 +209,11 @@ const ContactUs = () => {
                 <Input
                   type="number"
                   placeholder="Phone No."
-                  className="px-2 py-3  text-black w-full text-sm "
+                  className="px-2 py-3  text-white w-full text-sm "
+                  value={data.phone}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, phone: e.target.value }))
+                  }
                 />
                 <svg
                   fill="#bbb"
@@ -191,6 +229,10 @@ const ContactUs = () => {
                   type="email"
                   placeholder="Email"
                   className="px-2 py-3  text-black w-full text-sm "
+                  value={data.email}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, email: e.target.value }))
+                  }
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -223,6 +265,10 @@ const ContactUs = () => {
                 <textarea
                   placeholder="Write Message"
                   className="px-2 pt-3  border w-full text-sm "
+                  value={data.message}
+                  onChange={(e) =>
+                    setData((prev) => ({ ...prev, message: e.target.value }))
+                  }
                 ></textarea>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +299,14 @@ const ContactUs = () => {
 
               <div className="col-span-full">
                 <p className="text-sm font-bold  mb-4">Subject</p>
-                <RadioGroup defaultValue="comfortable" className="flex gap-4">
+                <RadioGroup
+                  defaultValue="comfortable"
+                  className="flex gap-4"
+                  onValueChange={(e) =>
+                    setData((prev) => ({ ...prev, subject: e }))
+                  }
+                  value={data.subject}
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="Queries" id="r1" />
                     <Label htmlFor="r1">Queries</Label>
@@ -271,7 +324,7 @@ const ContactUs = () => {
             </div>
 
             <Button
-              onClick={handleSubmit}
+              type="submit"
               variant={'default'}
               className="mt-12 flex items-center justify-center text-sm lg:ml-auto max-lg:w-full rounded-lg px-4 py-3 tracking-wide "
             >
