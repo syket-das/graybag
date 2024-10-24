@@ -27,7 +27,7 @@ const plans: PlanProps[] = [
   {
     title: 'Individual',
     popular: PopularPlan.NO,
-    price: 200,
+    price: 99,
     description:
       'For personal projects and small businesses with limited needs and budget.',
     buttonText: 'Get started',
@@ -43,7 +43,7 @@ const plans: PlanProps[] = [
   {
     title: 'Small Business',
     popular: PopularPlan.YES,
-    price: 500,
+    price: 199,
     description:
       'For small to medium-sized businesses looking to grow and scale.',
     buttonText: 'Get started',
